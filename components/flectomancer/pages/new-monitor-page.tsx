@@ -457,16 +457,28 @@ export function NewMonitorPage({
               "flex flex-col items-start w-1/2 border-r border-border",
               // Mobile: full width, hidden when preview view
               "max-md:w-full max-md:border-r-0 max-md:flex-1",
-              mobileView === "preview" && "max-md:hidden"
+              // Mobile view transition animation
+              "transition-all duration-300 ease-out",
+              mobileView === "preview" 
+                ? "max-md:opacity-0 max-md:scale-95 max-md:pointer-events-none max-md:absolute" 
+                : "max-md:opacity-100 max-md:scale-100"
             )}>
               {/* Chat Messages */}
               <div className="flex w-full grow shrink-0 basis-0 flex-col items-start gap-4 px-6 py-6 max-md:px-4 max-md:py-4 overflow-y-auto">
-                {messages.map((message) => (
+                {messages.map((message, index) => (
                   <React.Fragment key={message.id}>
-                    <div className={cn(
-                      "flex w-full items-start gap-3",
-                      message.role === "user" && "justify-end"
-                    )}>
+                    <div 
+                      className={cn(
+                        "flex w-full items-start gap-3",
+                        message.role === "user" && "justify-end",
+                        // Message entrance animation
+                        "animate-in fade-in slide-in-from-bottom-2 duration-300"
+                      )}
+                      style={{
+                        animationDelay: `${index * 100}ms`,
+                        animationFillMode: "both",
+                      }}
+                    >
                       {/* AI Avatar */}
                       {message.role === "ai" && (
                         <div className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent">
@@ -502,10 +514,13 @@ export function NewMonitorPage({
                               className={cn(
                                 "flex grow shrink-0 basis-0 flex-col items-center gap-2 rounded-lg",
                                 "border bg-card px-6 py-4",
-                                "cursor-pointer transition-all",
+                                "cursor-pointer transition-all duration-200",
+                                // Selection state with scale pulse
                                 source.selected
-                                  ? "border-primary bg-primary/10"
-                                  : "border-border hover:border-primary hover:bg-secondary"
+                                  ? "border-primary bg-primary/10 scale-[1.02] shadow-md"
+                                  : "border-border hover:border-primary hover:bg-secondary hover:scale-[1.01]",
+                                // Active press feedback
+                                "active:scale-[0.98]"
                               )}
                             >
                               <SourceIconComponent 
@@ -564,7 +579,11 @@ export function NewMonitorPage({
               "flex flex-col items-start gap-6 px-6 py-6 w-1/2 overflow-y-auto",
               // Mobile: full width, hidden when chat view
               "max-md:w-full max-md:px-4 max-md:py-4 max-md:flex-1",
-              mobileView === "chat" && "max-md:hidden"
+              // Mobile view transition animation
+              "transition-all duration-300 ease-out",
+              mobileView === "chat" 
+                ? "max-md:opacity-0 max-md:scale-95 max-md:pointer-events-none max-md:absolute" 
+                : "max-md:opacity-100 max-md:scale-100"
             )}>
               {/* Progress Section (desktop only - mobile shows in header) */}
               <div className="hidden md:flex w-full flex-col items-start gap-2">
@@ -576,15 +595,24 @@ export function NewMonitorPage({
 
               {/* Preview Cards */}
               <div className="flex w-full flex-col items-start gap-4 max-md:gap-3">
-                {previewFields.map((field) => (
+                {previewFields.map((field, index) => (
                   <div
                     key={field.id}
                     className={cn(
                       "flex w-full flex-col items-start gap-3 rounded-lg border px-4 py-3",
+                      // Completion state styling
                       field.complete
                         ? "border-success bg-card"
-                        : "border-border bg-secondary"
+                        : "border-border bg-secondary",
+                      // Transition for completion animation
+                      "transition-all duration-300 ease-out",
+                      // Staggered entrance animation
+                      "animate-in fade-in slide-in-from-bottom-2"
                     )}
+                    style={{
+                      animationDelay: `${index * 50}ms`,
+                      animationFillMode: "both",
+                    }}
                   >
                     <div className="flex w-full items-center justify-between">
                       <div className="flex items-center gap-2">
@@ -603,7 +631,7 @@ export function NewMonitorPage({
                         </span>
                       </div>
                       {field.complete && (
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 text-success">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 text-success animate-check">
                           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                           <path d="m9 11 3 3L22 4" />
                         </svg>
