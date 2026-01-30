@@ -17,7 +17,33 @@ A comprehensive, production-ready component library built with semantic design t
 
 ## Installation
 
-### Option 1: Copy Components Directly
+### Option 1: CLI Installation (Recommended)
+
+The easiest way to install Flectomancer into an existing Next.js project:
+
+```bash
+# Clone the repo and run the installer
+git clone https://github.com/flectomancer/subframe-app.git /tmp/flectomancer
+node /tmp/flectomancer/scripts/install-flectomancer.mjs
+rm -rf /tmp/flectomancer
+```
+
+Or as a one-liner using npx with degit:
+
+```bash
+# Using degit to download and run installer
+npx degit flectomancer/subframe-app /tmp/flectomancer && node /tmp/flectomancer/scripts/install-flectomancer.mjs && rm -rf /tmp/flectomancer
+```
+
+The installer will:
+1. Install all required dependencies (class-variance-authority, clsx, tailwind-merge, tailwindcss-animate)
+2. Copy all 14 components + 2 page containers to `components/flectomancer/`
+3. Set up the theme provider at `src/lib/theme-provider.tsx`
+4. Install the design tokens and animations in `src/app/globals.css`
+5. Create `lib/utils.ts` if it doesn't exist
+6. Provide instructions for updating your `layout.tsx`
+
+### Option 2: Copy Components Directly
 
 Copy the following directories into your Next.js project:
 
@@ -28,7 +54,7 @@ src/lib/theme-provider.tsx  # Theme context and hooks
 src/app/globals.css         # Design tokens and animations
 ```
 
-### Option 2: Manual Installation Steps
+### Option 3: Manual Installation Steps
 
 1. **Install dependencies:**
 
