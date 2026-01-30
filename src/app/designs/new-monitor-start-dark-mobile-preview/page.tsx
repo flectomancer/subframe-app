@@ -1,0 +1,227 @@
+"use client";
+
+import React from "react";
+import { Badge } from "@/ui/components/Badge";
+import { Button } from "@/ui/components/Button";
+import { FeatherArrowLeft } from "@subframe/core";
+import { FeatherBell } from "@subframe/core";
+import { FeatherChevronRight } from "@subframe/core";
+import { FeatherClock } from "@subframe/core";
+import { FeatherGithub } from "@subframe/core";
+import { FeatherGlobe } from "@subframe/core";
+import { FeatherHome } from "@subframe/core";
+import { FeatherMoon } from "@subframe/core";
+import { FeatherPlus } from "@subframe/core";
+import { FeatherRss } from "@subframe/core";
+import { FeatherSettings } from "@subframe/core";
+import { FeatherSun } from "@subframe/core";
+import { FeatherTarget } from "@subframe/core";
+import { FeatherTwitter } from "@subframe/core";
+import { FeatherZap } from "@subframe/core";
+
+function NewMonitorStartDarkMobilePreview() {
+  return (
+    <div className="flex h-full w-full items-start bg-neutral-950">
+      <div className="flex w-64 flex-none flex-col items-start justify-between self-stretch border-r border-solid border-neutral-800 bg-neutral-900">
+        <div className="flex w-full flex-col items-start gap-8 px-6 py-6">
+          <div className="flex w-full items-center gap-1">
+            <img
+              className="h-12 flex-none object-cover"
+              src="https://res.cloudinary.com/subframe/image/upload/v1738102619/uploads/3210/jj0xqh1xyj7apfm5lssg.png"
+            />
+            <FeatherChevronRight className="font-['Afacad_Flux'] text-[40px] font-[400] leading-[48px] text-brand-500" />
+          </div>
+          <div className="flex w-full flex-col items-start gap-2">
+            <span className="text-caption-bold font-caption-bold text-neutral-400">
+              MENU
+            </span>
+            <div className="flex w-full flex-col items-start gap-1">
+              <div className="flex w-full items-center gap-3 rounded-md px-3 py-2 bg-brand-900/40 cursor-pointer">
+                <FeatherHome className="text-body font-body text-brand-400" />
+                <span className="text-body-bold font-body-bold text-neutral-0">
+                  Dashboard
+                </span>
+              </div>
+              <div className="flex w-full items-center gap-3 rounded-md px-3 py-2 cursor-pointer hover:bg-neutral-800">
+                <FeatherClock className="text-body font-body text-neutral-400" />
+                <span className="text-body font-body text-neutral-300">
+                  Archived
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex w-full items-center gap-2 px-6 py-6">
+          <div className="flex items-center gap-3 rounded-md px-3 py-2 cursor-pointer hover:bg-neutral-800">
+            <FeatherSettings className="text-body font-body text-neutral-400" />
+            <span className="text-body font-body text-neutral-300">
+              Settings
+            </span>
+          </div>
+          <div className="flex h-8 w-8 flex-none items-center justify-center rounded-md cursor-pointer hover:bg-neutral-800">
+            <FeatherSun className="text-body font-body text-neutral-300" />
+          </div>
+          <div className="flex h-8 w-8 flex-none items-center justify-center rounded-md cursor-pointer hover:bg-neutral-800">
+            <FeatherMoon className="text-body font-body text-neutral-300" />
+          </div>
+        </div>
+      </div>
+      <div className="flex grow shrink-0 basis-0 flex-col items-start self-stretch overflow-y-auto">
+        <div className="flex w-full items-center justify-between px-8 py-6">
+          <span className="text-heading-1 font-heading-1 text-neutral-0">
+            Dashboard
+          </span>
+          <Button
+            className="hover:bg-brand-800"
+            variant="brand-primary"
+            icon={<FeatherPlus />}
+            iconRight={null}
+            onClick={(event: React.MouseEvent<HTMLButtonElement>) => {}}
+          >
+            New Monitor
+          </Button>
+        </div>
+        <div className="flex w-full flex-wrap items-start gap-6 px-8 py-8">
+          <div className="flex min-w-[320px] max-w-[384px] grow shrink-0 basis-0 flex-col items-start gap-4 rounded-lg border border-solid border-neutral-800 bg-neutral-900 cursor-pointer transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 hover:border-neutral-700">
+            <div className="flex w-full items-start justify-between px-6 pt-6">
+              <span className="text-heading-3 font-heading-3 text-neutral-0">
+                AI Industry News
+              </span>
+              <Badge variant="success" icon={null} iconRight={null}>
+                Active
+              </Badge>
+            </div>
+            <div className="flex w-full flex-col items-start gap-4 px-6 pb-6">
+              <span className="text-body font-body text-neutral-300">
+                Latest developments in artificial intelligence
+              </span>
+              <div className="flex items-center gap-3">
+                <FeatherRss className="text-body font-body text-neutral-500" />
+                <FeatherTwitter className="text-body font-body text-neutral-500" />
+              </div>
+            </div>
+            <div className="flex w-full items-center justify-between px-6 pb-6">
+              <span className="text-caption font-caption text-neutral-400">
+                Updated 2 hours ago
+              </span>
+              <span className="text-caption-bold font-caption-bold text-brand-400">
+                12 alerts
+              </span>
+            </div>
+          </div>
+          <div className="flex min-w-[320px] max-w-[384px] grow shrink-0 basis-0 flex-col items-start gap-4 rounded-lg border border-solid border-neutral-800 bg-neutral-900 cursor-pointer transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 hover:border-neutral-700">
+            <div className="flex w-full items-start justify-between px-6 pt-6">
+              <span className="text-heading-3 font-heading-3 text-neutral-0">
+                Competitor Tracking
+              </span>
+              <Badge variant="success" icon={null} iconRight={null}>
+                Active
+              </Badge>
+            </div>
+            <div className="flex w-full flex-col items-start gap-4 px-6 pb-6">
+              <span className="text-body font-body text-neutral-300">
+                OpenAI, Google DeepMind, Anthropic news
+              </span>
+              <div className="flex items-center gap-3">
+                <FeatherRss className="text-body font-body text-neutral-500" />
+                <FeatherGithub className="text-body font-body text-neutral-500" />
+                <FeatherTwitter className="text-body font-body text-neutral-500" />
+              </div>
+            </div>
+            <div className="flex w-full items-center justify-between px-6 pb-6">
+              <span className="text-caption font-caption text-neutral-400">
+                Updated 5 mins ago
+              </span>
+              <span className="text-caption-bold font-caption-bold text-brand-400">
+                47 alerts
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="flex items-center justify-center bg-[#000000ff] absolute inset-0 backdrop-blur-sm z-50">
+        <div className="flex grow shrink-0 basis-0 flex-col items-start self-stretch overflow-hidden bg-neutral-950">
+          <div className="flex w-full items-center justify-between px-4 py-4">
+            <div className="flex h-8 w-8 flex-none items-center justify-center rounded-md cursor-pointer hover:bg-neutral-800 transition-colors">
+              <FeatherArrowLeft className="text-body font-body text-[#ffffffff]" />
+            </div>
+            <span className="text-body-bold font-body-bold text-neutral-0">
+              New Monitor
+            </span>
+            <div className="flex h-8 w-8 flex-none items-start" />
+          </div>
+          <div className="flex w-full flex-col items-start gap-2 px-4 py-4">
+            <span className="text-caption-bold font-caption-bold text-neutral-0">
+              MONITOR PREVIEW
+            </span>
+            <div className="flex w-full items-center gap-3">
+              <div className="flex h-1 grow shrink-0 basis-0 flex-col items-start rounded-full bg-neutral-800" />
+              <span className="text-caption font-caption text-neutral-0">
+                0% complete
+              </span>
+            </div>
+          </div>
+          <div className="flex w-full grow shrink-0 basis-0 flex-col items-start gap-4 px-4 py-4 overflow-y-auto">
+            <div className="flex w-full flex-col items-start gap-3 rounded-lg border border-solid border-neutral-700 bg-neutral-800 px-4 py-3">
+              <div className="flex items-center gap-2">
+                <FeatherTarget className="text-body font-body text-neutral-300" />
+                <span className="text-caption-bold font-caption-bold text-neutral-300">
+                  MONITOR NAME
+                </span>
+              </div>
+              <span className="text-body font-body text-[#ffffffff] italic">
+                Waiting for input...
+              </span>
+            </div>
+            <div className="flex w-full flex-col items-start gap-3 rounded-lg border border-solid border-neutral-700 bg-neutral-800 px-4 py-3">
+              <div className="flex items-center gap-2">
+                <FeatherTarget className="text-body font-body text-neutral-300" />
+                <span className="text-caption-bold font-caption-bold text-neutral-300">
+                  MONITORING SCOPE
+                </span>
+              </div>
+              <span className="text-body font-body text-[#ffffffff] italic">
+                Describe what you want to monitor...
+              </span>
+            </div>
+            <div className="flex w-full flex-col items-start gap-3 rounded-lg border border-solid border-neutral-700 bg-neutral-800 px-4 py-3">
+              <div className="flex items-center gap-2">
+                <FeatherGlobe className="text-body font-body text-neutral-300" />
+                <span className="text-caption-bold font-caption-bold text-neutral-300">
+                  SOURCES
+                </span>
+              </div>
+              <span className="text-body font-body text-[#ffffffff] italic">
+                Select information sources...
+              </span>
+            </div>
+            <div className="flex w-full flex-col items-start gap-3 rounded-lg border border-solid border-neutral-700 bg-neutral-800 px-4 py-3">
+              <div className="flex items-center gap-2">
+                <FeatherZap className="text-body font-body text-neutral-300" />
+                <span className="text-caption-bold font-caption-bold text-neutral-300">
+                  UPDATE FREQUENCY
+                </span>
+              </div>
+              <span className="text-body font-body text-[#ffffffff] italic">
+                Choose update frequency...
+              </span>
+            </div>
+            <div className="flex w-full flex-col items-start gap-3 rounded-lg border border-solid border-neutral-700 bg-neutral-800 px-4 py-3">
+              <div className="flex items-center gap-2">
+                <FeatherBell className="text-body font-body text-neutral-300" />
+                <span className="text-caption-bold font-caption-bold text-neutral-300">
+                  ALERTS
+                </span>
+              </div>
+              <span className="text-body font-body text-[#ffffffff] italic">
+                Configure alert channels...
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default NewMonitorStartDarkMobilePreview;

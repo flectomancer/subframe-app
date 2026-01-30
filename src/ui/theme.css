@@ -1,0 +1,168 @@
+@theme {
+  /* Colors */
+  --color-brand-50: rgb(251, 251, 254);
+  --color-brand-100: rgb(245, 245, 245);
+  --color-brand-200: rgb(229, 229, 229);
+  --color-brand-300: rgb(221, 219, 255);
+  --color-brand-400: rgb(213, 204, 255);
+  --color-brand-500: rgb(172, 153, 255);
+  --color-brand-600: rgb(88, 51, 255);
+  --color-brand-700: rgb(47, 0, 255);
+  --color-brand-800: rgb(37, 0, 204);
+  --color-brand-900: rgb(50, 38, 146);
+  --color-neutral-0: rgb(230, 230, 230);
+  --color-neutral-50: rgb(217, 217, 217);
+  --color-neutral-100: rgb(204, 204, 204);
+  --color-neutral-200: rgb(191, 191, 191);
+  --color-neutral-300: rgb(115, 115, 115);
+  --color-neutral-400: rgb(89, 89, 89);
+  --color-neutral-500: rgb(77, 77, 77);
+  --color-neutral-600: rgb(64, 64, 64);
+  --color-neutral-700: rgb(51, 51, 51);
+  --color-neutral-800: rgb(38, 38, 38);
+  --color-neutral-900: rgb(26, 26, 26);
+  --color-neutral-950: rgb(13, 13, 13);
+  --color-error-50: rgb(254, 235, 236);
+  --color-error-100: rgb(254, 226, 226);
+  --color-error-200: rgb(254, 216, 217);
+  --color-error-300: rgb(252, 177, 180);
+  --color-error-400: rgb(249, 98, 105);
+  --color-error-500: rgb(249, 78, 86);
+  --color-error-600: rgb(248, 58, 68);
+  --color-error-700: rgb(247, 38, 49);
+  --color-error-800: rgb(236, 9, 20);
+  --color-error-900: rgb(197, 7, 17);
+  --color-warning-50: rgb(255, 250, 235);
+  --color-warning-100: rgb(255, 245, 214);
+  --color-warning-200: rgb(255, 235, 173);
+  --color-warning-300: rgb(255, 226, 133);
+  --color-warning-400: rgb(255, 222, 112);
+  --color-warning-500: rgb(255, 217, 92);
+  --color-warning-600: rgb(255, 212, 71);
+  --color-warning-700: rgb(255, 207, 51);
+  --color-warning-800: rgb(245, 188, 0);
+  --color-warning-900: rgb(224, 172, 0);
+  --color-success-50: rgb(239, 251, 241);
+  --color-success-100: rgb(223, 246, 227);
+  --color-success-200: rgb(191, 237, 198);
+  --color-success-300: rgb(159, 229, 169);
+  --color-success-400: rgb(95, 211, 112);
+  --color-success-500: rgb(63, 202, 84);
+  --color-success-600: rgb(53, 192, 74);
+  --color-success-700: rgb(48, 176, 67);
+  --color-success-800: rgb(39, 144, 55);
+  --color-success-900: rgb(31, 112, 43);
+  --color-light-text: rgb(26, 26, 26);
+  --color-light-background: rgb(251, 251, 254);
+  --color-light-primary: rgb(50, 38, 146);
+  --color-light-secondary: rgb(221, 219, 255);
+  --color-light-accent: rgb(37, 0, 204);
+  --color-dark-text: rgb(230, 230, 230);
+  --color-dark-background: rgb(1, 1, 4);
+  --color-dark-primary: rgb(122, 109, 217);
+  --color-dark-secondary: rgb(2, 0, 36);
+  --color-dark-accent: rgb(88, 51, 255);
+
+  /* Fonts */
+  --text-caption: 12px;
+  --text-caption--font-weight: 400;
+  --text-caption--letter-spacing: 0em;
+  --text-caption--line-height: 16px;
+  --text-caption-bold: 12px;
+  --text-caption-bold--font-weight: 500;
+  --text-caption-bold--letter-spacing: 0em;
+  --text-caption-bold--line-height: 16px;
+  --text-body: 14px;
+  --text-body--font-weight: 400;
+  --text-body--letter-spacing: 0em;
+  --text-body--line-height: 20px;
+  --text-body-bold: 14px;
+  --text-body-bold--font-weight: 500;
+  --text-body-bold--letter-spacing: 0em;
+  --text-body-bold--line-height: 20px;
+  --text-heading-3: 16px;
+  --text-heading-3--font-weight: 600;
+  --text-heading-3--letter-spacing: 0em;
+  --text-heading-3--line-height: 20px;
+  --text-heading-2: 20px;
+  --text-heading-2--font-weight: 600;
+  --text-heading-2--letter-spacing: 0em;
+  --text-heading-2--line-height: 24px;
+  --text-heading-1: 30px;
+  --text-heading-1--font-weight: 600;
+  --text-heading-1--letter-spacing: 0em;
+  --text-heading-1--line-height: 36px;
+  --text-monospace-body: 14px;
+  --text-monospace-body--font-weight: 400;
+  --text-monospace-body--letter-spacing: 0em;
+  --text-monospace-body--line-height: 20px;
+
+  /* Font families */
+  --font-caption: "IBM Plex Sans";
+  --font-caption-bold: "IBM Plex Sans";
+  --font-body: "IBM Plex Sans";
+  --font-body-bold: "IBM Plex Sans";
+  --font-heading-3: "IBM Plex Sans";
+  --font-heading-2: "IBM Plex Sans";
+  --font-heading-1: "IBM Plex Sans";
+  --font-monospace-body: "IBM Plex Sans";
+
+  /* Box shadows */
+  --shadow-sm: 0px 1px 2px 0px rgba(0, 0, 0, 0.04);
+  --shadow-default: 0px 1px 2px 0px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0px 4px 16px -2px rgba(0, 0, 0, 0.08),
+    0px 2px 4px -1px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0px 12px 32px -4px rgba(0, 0, 0, 0.12),
+    0px 4px 12px -2px rgba(0, 0, 0, 0.12);
+  --shadow-overlay: 0px 12px 32px -4px rgba(0, 0, 0, 0.12),
+    0px 4px 12px -2px rgba(0, 0, 0, 0.12);
+
+  /* Border radiuses */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-DEFAULT: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+  --radius-custom-corner: 4px;
+  --radius-rounded-extra-large: 16px;
+
+  /* Spacing */
+  --spacing-112: 28rem;
+  --spacing-144: 36rem;
+  --spacing-192: 48rem;
+  --spacing-256: 64rem;
+  --spacing-320: 80rem;
+}
+
+/* Container */
+@utility container {
+  padding-left: 16px;
+  padding-right: 16px;
+
+  @media (width >= theme(--breakpoint-sm)) {
+    padding-left: calc((100vw + 16px - 640px) / 2);
+    padding-right: calc((100vw + 16px - 640px) / 2);
+  }
+
+  @media (width >= theme(--breakpoint-md)) {
+    padding-left: calc((100vw + 16px - 768px) / 2);
+    padding-right: calc((100vw + 16px - 768px) / 2);
+  }
+
+  @media (width >= theme(--breakpoint-lg)) {
+    padding-left: calc((100vw + 16px - 1024px) / 2);
+    padding-right: calc((100vw + 16px - 1024px) / 2);
+  }
+
+  @media (width >= theme(--breakpoint-xl)) {
+    padding-left: calc((100vw + 16px - 1280px) / 2);
+    padding-right: calc((100vw + 16px - 1280px) / 2);
+  }
+
+  @media (width >= theme(--breakpoint-2xl)) {
+    padding-left: calc((100vw + 16px - 1536px) / 2);
+    padding-right: calc((100vw + 16px - 1536px) / 2);
+  }
+}
+
+@custom-variant mobile (@media (max-width: 767px));
