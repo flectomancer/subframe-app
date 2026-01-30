@@ -1,19 +1,17 @@
 "use client";
 
 import React from "react";
+import { cn } from "@/lib/utils";
 import { useTheme } from "@/lib/theme-provider";
-import {
-  Sidebar,
-  Button,
-  IconButton,
-  ChatBubble,
-  ChatInput,
-  Avatar,
-  ProgressBar,
-  PreviewCard,
-  SourceCard,
-  ModalOverlay,
-} from "@/components/flectomancer";
+import { Sidebar } from "../sidebar";
+import { Button } from "../button";
+import { IconButton } from "../icon-button";
+import { ChatBubble } from "../chat-bubble";
+import { ChatInput } from "../chat-input";
+import { Avatar } from "../avatar";
+import { ProgressBar } from "../progress-bar";
+import { PreviewCard } from "../preview-card";
+import { SourceCard } from "../source-card";
 
 /**
  * Inline SVG icons
@@ -30,6 +28,23 @@ function XIcon({ className }: { className?: string }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
       <path d="M18 6 6 18M6 6l12 12" />
+    </svg>
+  );
+}
+
+function ArrowLeftIcon({ className }: { className?: string }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="m12 19-7-7 7-7M19 12H5" />
+    </svg>
+  );
+}
+
+function EyeIcon({ className }: { className?: string }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+      <circle cx="12" cy="12" r="3" />
     </svg>
   );
 }
@@ -78,11 +93,11 @@ function TrendingUpIcon({ className }: { className?: string }) {
   );
 }
 
-function FileTextIcon({ className }: { className?: string }) {
+function NewspaperIcon({ className }: { className?: string }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
-      <path d="M14 2v4a2 2 0 0 0 2 2h4M10 9H8M16 13H8M16 17H8" />
+      <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2" />
+      <path d="M18 14h-8M15 18h-5M10 6h8v4h-8V6Z" />
     </svg>
   );
 }
@@ -105,12 +120,11 @@ function TwitterIcon({ className }: { className?: string }) {
   );
 }
 
-function MenuIcon({ className }: { className?: string }) {
+function GithubIcon({ className }: { className?: string }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <line x1="4" x2="20" y1="12" y2="12" />
-      <line x1="4" x2="20" y1="6" y2="6" />
-      <line x1="4" x2="20" y1="18" y2="18" />
+      <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+      <path d="M9 18c-4.51 2-5-2-7-2" />
     </svg>
   );
 }
@@ -126,7 +140,7 @@ export interface ChatMessage {
   sources?: Array<{
     id: string;
     label: string;
-    icon: "nasdaq" | "news" | "rss" | "twitter";
+    icon: "nasdaq" | "news" | "rss" | "twitter" | "github";
     selected?: boolean;
   }>;
 }
@@ -206,11 +220,13 @@ function SourceIconComponent({ icon, className }: { icon: ChatMessage["sources"]
     case "nasdaq":
       return <TrendingUpIcon className={className} />;
     case "news":
-      return <FileTextIcon className={className} />;
+      return <NewspaperIcon className={className} />;
     case "rss":
       return <RssIcon className={className} />;
     case "twitter":
       return <TwitterIcon className={className} />;
+    case "github":
+      return <GithubIcon className={className} />;
   }
 }
 
@@ -218,25 +234,11 @@ function SourceIconComponent({ icon, className }: { icon: ChatMessage["sources"]
  * NewMonitorPage Component
  * 
  * A full-page modal for creating new monitors via AI chat, featuring:
- * - Split-pane layout: chat on left, preview on right
+ * - Desktop: Split-pane layout with chat on left, preview on right
+ * - Mobile: Full-screen with toggle between chat view and preview view
  * - Real-time progress tracking
- * - Source selection cards
- * - Responsive design (stacks on mobile)
+ * - Source selection cards inline in chat
  * - Theme-aware styling
- * 
- * @example
- * ```tsx
- * <NewMonitorPage
- *   isOpen={true}
- *   onClose={() => setModalOpen(false)}
- *   messages={chatMessages}
- *   inputValue={input}
- *   onInputChange={setInput}
- *   onSendMessage={handleSend}
- *   previewFields={fields}
- *   progress={40}
- * />
- * ```
  */
 export function NewMonitorPage({
   isOpen,
@@ -255,74 +257,86 @@ export function NewMonitorPage({
   className,
 }: NewMonitorPageProps) {
   const { setTheme, resolvedTheme } = useTheme();
-  const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const chatEndRef = React.useRef<HTMLDivElement>(null);
+  
+  // Mobile view state: "chat" or "preview"
+  const [mobileView, setMobileView] = React.useState<"chat" | "preview">("chat");
+  
+  // Animation state
+  const [isVisible, setIsVisible] = React.useState(false);
+  const [shouldRender, setShouldRender] = React.useState(false);
+
+  // Handle open/close animations
+  React.useEffect(() => {
+    if (isOpen) {
+      setShouldRender(true);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsVisible(true);
+        });
+      });
+    } else {
+      setIsVisible(false);
+      const timer = setTimeout(() => {
+        setShouldRender(false);
+        setMobileView("chat"); // Reset mobile view on close
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
 
   // Auto-scroll chat to bottom
   React.useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // Handle escape key
+  React.useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+    if (shouldRender) {
+      document.addEventListener("keydown", handleEscape);
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "";
+    };
+  }, [shouldRender, onClose]);
+
+  if (!shouldRender) return null;
+
   return (
-    <div className={`flex h-full w-full items-start bg-background ${className || ""}`}>
-      {/* Desktop Sidebar */}
-      <Sidebar
-        logoUrl={logoUrl}
-        activeItem={activeMenuItem}
-        onNavigate={(item) => onNavigate?.(item as "dashboard" | "archived" | "settings")}
-        onThemeChange={setTheme}
-        currentTheme={resolvedTheme as "light" | "dark"}
-        className="hidden md:flex"
-      />
+    <div className={cn("flex h-full w-full items-start bg-background", className)}>
+      {/* Desktop Sidebar - visible behind modal overlay */}
+      <div className="hidden md:flex">
+        <Sidebar
+          logoUrl={logoUrl}
+          activeItem={activeMenuItem}
+          onNavigate={onNavigate}
+          onThemeChange={setTheme}
+          currentTheme={resolvedTheme as "light" | "dark"}
+        />
+      </div>
 
-      {/* Mobile Sidebar Overlay */}
-      {sidebarOpen && (
-        <div 
-          className="fixed inset-0 z-40 bg-overlay md:hidden"
-          onClick={() => setSidebarOpen(false)}
-        >
-          <div onClick={(e) => e.stopPropagation()}>
-            <Sidebar
-              logoUrl={logoUrl}
-              activeItem={activeMenuItem}
-              onNavigate={(item) => {
-                onNavigate?.(item as "dashboard" | "archived" | "settings");
-                setSidebarOpen(false);
-              }}
-              onThemeChange={setTheme}
-              currentTheme={resolvedTheme as "light" | "dark"}
-              className="absolute left-0 top-0 h-full"
-            />
-          </div>
-        </div>
-      )}
-
-      {/* Main Content (Background - dimmed when modal open) */}
-      <div className="flex grow shrink-0 basis-0 flex-col items-start self-stretch overflow-y-auto">
-        {/* Header */}
-        <div className="flex w-full items-center justify-between px-8 py-6 max-md:px-4 max-md:py-4">
-          <div className="flex items-center gap-3">
-            <IconButton
-              variant="ghost"
-              size="sm"
-              onClick={() => setSidebarOpen(true)}
-              className="md:hidden"
-              aria-label="Open menu"
-            >
-              <MenuIcon className="h-5 w-5" />
-            </IconButton>
-            <h1 className="text-heading-1 font-heading-1 text-foreground max-md:text-heading-2 max-md:font-heading-2">
-              Dashboard
-            </h1>
-          </div>
-          <Button variant="secondary">
+      {/* Main Content (dimmed background) */}
+      <div className="flex grow shrink-0 basis-0 flex-col items-start self-stretch overflow-hidden">
+        {/* Header (dimmed) */}
+        <div className="flex w-full items-center justify-between px-8 py-6 max-md:px-4 max-md:py-4 opacity-50 pointer-events-none">
+          <h1 className="text-heading-1 font-heading-1 text-foreground max-md:text-heading-2">
+            Dashboard
+          </h1>
+          <Button variant="secondary" disabled>
             <PlusIcon className="h-4 w-4" />
             <span className="max-md:hidden">New Monitor</span>
           </Button>
         </div>
 
         {/* Background Monitor Cards (dimmed) */}
-        <div className="flex w-full flex-wrap items-start gap-6 px-8 py-8 max-md:px-4 max-md:py-4 opacity-50 pointer-events-none">
+        <div className="flex w-full flex-wrap items-start gap-6 px-8 py-8 max-md:px-4 max-md:py-4 opacity-30 pointer-events-none">
           {backgroundMonitors.map((monitor) => (
             <div
               key={monitor.id}
@@ -340,114 +354,274 @@ export function NewMonitorPage({
       </div>
 
       {/* Modal Overlay */}
-      {isOpen && (
-        <ModalOverlay
-          isOpen={isOpen}
-          onClose={onClose}
-          variant="fullscreen"
-          showCloseButton={false}
-          className="z-50"
+      <div
+        className={cn(
+          "fixed inset-0 z-50 flex items-center justify-center",
+          "transition-all duration-300 ease-out",
+          isVisible
+            ? "bg-overlay-heavy backdrop-blur-sm"
+            : "bg-transparent backdrop-blur-none"
+        )}
+      >
+        {/* Modal Content */}
+        <div
+          className={cn(
+            "flex grow shrink-0 basis-0 flex-col items-start self-stretch overflow-hidden bg-background",
+            "transition-all duration-300 ease-out",
+            isVisible
+              ? "opacity-100 scale-100 translate-y-0"
+              : "opacity-0 scale-[0.98] translate-y-4"
+          )}
         >
-          <div className="flex h-full w-full flex-col items-start bg-background">
-            {/* Modal Header */}
-            <div className="flex w-full items-center justify-between px-6 py-4 border-b border-border">
-              <IconButton
-                variant="ghost"
-                size="sm"
-                onClick={onClose}
-                aria-label="Close"
-              >
-                <XIcon className="h-5 w-5" />
-              </IconButton>
-              <span className="text-heading-3 font-heading-3 text-foreground">
-                New Monitor
-              </span>
-              <div className="h-8 w-8" /> {/* Spacer for centering */}
+          {/* === MOBILE HEADER === */}
+          <div className="flex w-full items-center justify-between px-4 py-4 md:hidden">
+            {/* Left: X (chat view) or Back Arrow (preview view) */}
+            <div
+              onClick={mobileView === "chat" ? onClose : () => setMobileView("chat")}
+              className={cn(
+                "flex h-8 w-8 flex-none items-center justify-center rounded-md",
+                "cursor-pointer hover:bg-secondary transition-colors"
+              )}
+            >
+              {mobileView === "chat" ? (
+                <XIcon className="h-5 w-5 text-foreground" />
+              ) : (
+                <ArrowLeftIcon className="h-5 w-5 text-foreground" />
+              )}
             </div>
 
-            {/* Split Content */}
-            <div className="flex w-full grow shrink-0 basis-0 items-stretch max-md:flex-col">
-              {/* Left Panel - Chat */}
-              <div className="flex flex-col items-start w-1/2 max-md:w-full max-md:h-1/2">
-                {/* Chat Messages */}
-                <div className="flex w-full grow shrink-0 basis-0 flex-col items-start gap-4 px-6 py-6 overflow-y-auto">
-                  {messages.map((message) => (
-                    <React.Fragment key={message.id}>
-                      <ChatBubble
-                        role={message.role}
-                        avatar={
-                          message.role === "ai" ? (
-                            <Avatar variant="brand" size="md">
-                              <ZapIcon className="h-5 w-5" />
-                            </Avatar>
-                          ) : undefined
-                        }
-                      >
-                        {message.content}
-                      </ChatBubble>
+            {/* Center: Title */}
+            <span className="text-body-bold font-body-bold text-foreground">
+              New Monitor
+            </span>
 
-                      {/* Inline source selection */}
-                      {message.sources && message.sources.length > 0 && (
-                        <div className="flex w-full items-center justify-center gap-4 px-12 flex-wrap">
-                          {message.sources.map((source) => (
-                            <SourceCard
-                              key={source.id}
-                              label={source.label}
-                              icon={<SourceIconComponent icon={source.icon} className="h-5 w-5" />}
-                              selected={source.selected}
-                              onClick={() => onSourceSelect?.(source.id)}
-                            />
-                          ))}
+            {/* Right: Eye button (chat view) or spacer (preview view) */}
+            {mobileView === "chat" ? (
+              <div
+                onClick={() => setMobileView("preview")}
+                className={cn(
+                  "flex h-8 w-8 flex-none items-center justify-center rounded-md",
+                  "border border-border bg-card",
+                  "cursor-pointer hover:bg-secondary transition-colors"
+                )}
+              >
+                <EyeIcon className="h-4 w-4 text-foreground" />
+              </div>
+            ) : (
+              <div className="h-8 w-8 flex-none" />
+            )}
+          </div>
+
+          {/* === DESKTOP HEADER === */}
+          <div className="hidden md:flex w-full items-center justify-between px-6 py-4 border-b border-border">
+            <div
+              onClick={onClose}
+              className={cn(
+                "flex h-8 w-8 flex-none items-center justify-center rounded-md",
+                "cursor-pointer hover:bg-secondary hover:border-primary border border-transparent transition-colors"
+              )}
+            >
+              <XIcon className="h-5 w-5 text-foreground" />
+            </div>
+            <span className="text-body-bold font-body-bold text-foreground">
+              New Monitor
+            </span>
+            <div className="h-8 w-8" />
+          </div>
+
+          {/* === MOBILE PROGRESS BAR (visible in both views) === */}
+          <div className="flex w-full flex-col items-start gap-2 px-4 pb-4 md:hidden">
+            {mobileView === "preview" && (
+              <span className="text-caption-bold font-caption-bold text-foreground uppercase">
+                Monitor Preview
+              </span>
+            )}
+            <div className="flex w-full items-center gap-3">
+              <div className="flex h-1 grow shrink-0 basis-0 flex-col items-start rounded-full bg-progress-track overflow-hidden">
+                <div
+                  className="h-1 rounded-full bg-progress-fill transition-all duration-300"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+              <span className="text-caption font-caption text-foreground">
+                {progress}% complete
+              </span>
+            </div>
+          </div>
+
+          {/* === CONTENT AREA === */}
+          <div className="flex w-full grow shrink-0 basis-0 items-stretch max-md:flex-col">
+            
+            {/* LEFT PANEL - Chat (hidden on mobile when showing preview) */}
+            <div className={cn(
+              "flex flex-col items-start w-1/2 border-r border-border",
+              // Mobile: full width, hidden when preview view
+              "max-md:w-full max-md:border-r-0 max-md:flex-1",
+              mobileView === "preview" && "max-md:hidden"
+            )}>
+              {/* Chat Messages */}
+              <div className="flex w-full grow shrink-0 basis-0 flex-col items-start gap-4 px-6 py-6 max-md:px-4 max-md:py-4 overflow-y-auto">
+                {messages.map((message) => (
+                  <React.Fragment key={message.id}>
+                    <div className={cn(
+                      "flex w-full items-start gap-3",
+                      message.role === "user" && "justify-end"
+                    )}>
+                      {/* AI Avatar */}
+                      {message.role === "ai" && (
+                        <div className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent">
+                          <ZapIcon className="h-5 w-5 text-primary-foreground" />
                         </div>
                       )}
-                    </React.Fragment>
-                  ))}
-                  <div ref={chatEndRef} />
-                </div>
 
-                {/* Chat Input */}
-                <div className="w-full px-6 py-6">
-                  <ChatInput
-                    value={inputValue}
-                    onChange={onInputChange}
-                    onSend={onSendMessage}
-                    placeholder="Describe what you want to monitor..."
-                  />
-                </div>
+                      {/* Message Bubble */}
+                      <div className={cn(
+                        "flex grow shrink-0 basis-0 flex-col items-start gap-2 px-4 py-3 rounded-lg",
+                        message.role === "ai" 
+                          ? "bg-transparent" 
+                          : "bg-primary max-w-[80%] grow-0"
+                      )}>
+                        <span className={cn(
+                          "text-body font-body",
+                          message.role === "ai" ? "text-foreground" : "text-primary-foreground"
+                        )}>
+                          {message.content}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Inline source selection */}
+                    {message.sources && message.sources.length > 0 && (
+                      <div className="flex w-full items-start gap-3">
+                        <div className="h-10 w-10 flex-none" />
+                        <div className="flex grow shrink-0 basis-0 items-center gap-3 flex-wrap">
+                          {message.sources.map((source) => (
+                            <div
+                              key={source.id}
+                              onClick={() => onSourceSelect?.(source.id)}
+                              className={cn(
+                                "flex grow shrink-0 basis-0 flex-col items-center gap-2 rounded-lg",
+                                "border bg-card px-6 py-4",
+                                "cursor-pointer transition-all",
+                                source.selected
+                                  ? "border-primary bg-primary/10"
+                                  : "border-border hover:border-primary hover:bg-secondary"
+                              )}
+                            >
+                              <SourceIconComponent 
+                                icon={source.icon} 
+                                className="h-6 w-6 text-primary" 
+                              />
+                              <span className="text-body-bold font-body-bold text-card-foreground">
+                                {source.label}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </React.Fragment>
+                ))}
+                <div ref={chatEndRef} />
               </div>
 
-              {/* Right Panel - Preview */}
-              <div className="flex flex-col items-start gap-6 px-6 py-6 w-1/2 max-md:w-full max-md:h-1/2 overflow-y-auto border-l border-border max-md:border-l-0 max-md:border-t">
-                {/* Progress Section */}
-                <div className="flex w-full flex-col items-start gap-2">
-                  <span className="text-caption-bold font-caption-bold text-muted-foreground">
-                    MONITOR PREVIEW
-                  </span>
-                  <ProgressBar 
-                    value={progress} 
-                    showLabel 
-                    size="sm"
+              {/* Chat Input */}
+              <div className="w-full px-6 py-4 max-md:px-4 max-md:py-4">
+                <div className={cn(
+                  "flex w-full items-center gap-2 rounded-lg border border-border bg-input px-4 py-3 max-md:px-3 max-md:py-2"
+                )}>
+                  <input
+                    type="text"
+                    placeholder="Describe what you want to monitor..."
+                    value={inputValue}
+                    onChange={(e) => onInputChange(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault();
+                        onSendMessage();
+                      }
+                    }}
+                    className="flex-1 bg-transparent text-body font-body text-foreground placeholder:text-muted-foreground outline-none"
                   />
+                  <div
+                    onClick={onSendMessage}
+                    className={cn(
+                      "flex h-10 w-10 max-md:h-8 max-md:w-8 flex-none items-center justify-center rounded-md bg-primary",
+                      "cursor-pointer hover:bg-primary-hover transition-colors"
+                    )}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 max-md:h-4 max-md:w-4 text-primary-foreground">
+                      <path d="m22 2-7 20-4-9-9-4Z" />
+                      <path d="M22 2 11 13" />
+                    </svg>
+                  </div>
                 </div>
+              </div>
+            </div>
 
-                {/* Preview Cards */}
-                <div className="flex w-full flex-col items-start gap-3">
-                  {previewFields.map((field) => (
-                    <PreviewCard
-                      key={field.id}
-                      label={field.label}
-                      icon={<PreviewFieldIcon icon={field.icon} className="h-4 w-4" />}
-                      value={field.value}
-                      placeholder={field.placeholder}
-                      complete={field.complete}
-                    />
-                  ))}
-                </div>
+            {/* RIGHT PANEL - Preview (hidden on mobile when showing chat) */}
+            <div className={cn(
+              "flex flex-col items-start gap-6 px-6 py-6 w-1/2 overflow-y-auto",
+              // Mobile: full width, hidden when chat view
+              "max-md:w-full max-md:px-4 max-md:py-4 max-md:flex-1",
+              mobileView === "chat" && "max-md:hidden"
+            )}>
+              {/* Progress Section (desktop only - mobile shows in header) */}
+              <div className="hidden md:flex w-full flex-col items-start gap-2">
+                <span className="text-caption-bold font-caption-bold text-muted-foreground uppercase">
+                  Monitor Preview
+                </span>
+                <ProgressBar value={progress} showLabel size="sm" />
+              </div>
+
+              {/* Preview Cards */}
+              <div className="flex w-full flex-col items-start gap-4 max-md:gap-3">
+                {previewFields.map((field) => (
+                  <div
+                    key={field.id}
+                    className={cn(
+                      "flex w-full flex-col items-start gap-3 rounded-lg border px-4 py-3",
+                      field.complete
+                        ? "border-success bg-card"
+                        : "border-border bg-secondary"
+                    )}
+                  >
+                    <div className="flex w-full items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <PreviewFieldIcon
+                          icon={field.icon}
+                          className={cn(
+                            "h-4 w-4",
+                            field.complete ? "text-success" : "text-muted-foreground"
+                          )}
+                        />
+                        <span className={cn(
+                          "text-caption-bold font-caption-bold uppercase",
+                          field.complete ? "text-success" : "text-muted-foreground"
+                        )}>
+                          {field.label}
+                        </span>
+                      </div>
+                      {field.complete && (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 text-success">
+                          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                          <path d="m9 11 3 3L22 4" />
+                        </svg>
+                      )}
+                    </div>
+                    <span className={cn(
+                      "text-body font-body",
+                      field.value ? "text-foreground" : "text-foreground italic"
+                    )}>
+                      {field.value || field.placeholder}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-        </ModalOverlay>
-      )}
+        </div>
+      </div>
     </div>
   );
 }
