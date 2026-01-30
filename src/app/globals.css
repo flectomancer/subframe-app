@@ -1,13 +1,735 @@
 @import "tailwindcss";
-@import "../ui/theme.css";
+
+/* ============================================================================
+   FLECTOMANCER DESIGN SYSTEM
+   A comprehensive theming architecture with three layers:
+   1. Primitive Colors (@theme) - Raw color palette
+   2. Semantic Tokens (:root / .dark) - Purpose-based, theme-aware
+   3. Component Tokens - Specific component patterns
+   ============================================================================ */
+
+/* ============================================================================
+   LAYER 1: PRIMITIVE COLORS
+   The raw color palette - these values never change between themes.
+   Only modify these to change the fundamental brand identity.
+   ============================================================================ */
+
+@theme {
+  /* --------------------------------------------------------------------------
+     BRAND COLORS
+     Primary brand palette - purple/violet spectrum
+     -------------------------------------------------------------------------- */
+  --color-brand-50: rgb(251, 251, 254);   /* Lightest tint */
+  --color-brand-100: rgb(245, 245, 245);  /* Very light */
+  --color-brand-200: rgb(229, 229, 229);  /* Light */
+  --color-brand-300: rgb(221, 219, 255);  /* Light purple tint */
+  --color-brand-400: rgb(213, 204, 255);  /* Soft purple */
+  --color-brand-500: rgb(172, 153, 255);  /* Medium purple */
+  --color-brand-600: rgb(88, 51, 255);    /* PRIMARY BRAND - Electric purple */
+  --color-brand-700: rgb(47, 0, 255);     /* Deep purple */
+  --color-brand-800: rgb(37, 0, 204);     /* Darker purple */
+  --color-brand-900: rgb(50, 38, 146);    /* Darkest purple */
+
+  /* --------------------------------------------------------------------------
+     NEUTRAL COLORS
+     Grayscale palette for text, backgrounds, and borders
+     Note: Scale inverts between light/dark themes
+     -------------------------------------------------------------------------- */
+  --color-neutral-0: rgb(255, 255, 255);    /* Pure white */
+  --color-neutral-50: rgb(250, 250, 250);   /* Off-white */
+  --color-neutral-100: rgb(245, 245, 245);  /* Lightest gray */
+  --color-neutral-200: rgb(229, 229, 229);  /* Light gray */
+  --color-neutral-300: rgb(212, 212, 212);  /* Medium light gray */
+  --color-neutral-400: rgb(163, 163, 163);  /* Medium gray */
+  --color-neutral-500: rgb(115, 115, 115);  /* True mid gray */
+  --color-neutral-600: rgb(82, 82, 82);     /* Medium dark gray */
+  --color-neutral-700: rgb(64, 64, 64);     /* Dark gray */
+  --color-neutral-800: rgb(38, 38, 38);     /* Very dark gray */
+  --color-neutral-900: rgb(26, 26, 26);     /* Near black */
+  --color-neutral-950: rgb(13, 13, 13);     /* Deepest black */
+
+  /* --------------------------------------------------------------------------
+     SEMANTIC COLORS
+     Status and feedback colors
+     -------------------------------------------------------------------------- */
+  /* Success - Green */
+  --color-success-50: rgb(240, 253, 244);
+  --color-success-100: rgb(220, 252, 231);
+  --color-success-200: rgb(187, 247, 208);
+  --color-success-300: rgb(134, 239, 172);
+  --color-success-400: rgb(74, 222, 128);
+  --color-success-500: rgb(34, 197, 94);
+  --color-success-600: rgb(22, 163, 74);    /* PRIMARY SUCCESS */
+  --color-success-700: rgb(21, 128, 61);
+  --color-success-800: rgb(22, 101, 52);
+  --color-success-900: rgb(20, 83, 45);
+
+  /* Warning - Amber/Yellow */
+  --color-warning-50: rgb(255, 251, 235);
+  --color-warning-100: rgb(254, 243, 199);
+  --color-warning-200: rgb(253, 230, 138);
+  --color-warning-300: rgb(252, 211, 77);
+  --color-warning-400: rgb(251, 191, 36);
+  --color-warning-500: rgb(245, 158, 11);
+  --color-warning-600: rgb(217, 119, 6);    /* PRIMARY WARNING */
+  --color-warning-700: rgb(180, 83, 9);
+  --color-warning-800: rgb(146, 64, 14);
+  --color-warning-900: rgb(120, 53, 15);
+
+  /* Error - Red */
+  --color-error-50: rgb(254, 242, 242);
+  --color-error-100: rgb(254, 226, 226);
+  --color-error-200: rgb(254, 202, 202);
+  --color-error-300: rgb(252, 165, 165);
+  --color-error-400: rgb(248, 113, 113);
+  --color-error-500: rgb(239, 68, 68);
+  --color-error-600: rgb(220, 38, 38);      /* PRIMARY ERROR */
+  --color-error-700: rgb(185, 28, 28);
+  --color-error-800: rgb(153, 27, 27);
+  --color-error-900: rgb(127, 29, 29);
+
+  /* --------------------------------------------------------------------------
+     TYPOGRAPHY
+     Font sizes, weights, and line heights
+     -------------------------------------------------------------------------- */
+  --text-caption: 12px;
+  --text-caption--font-weight: 400;
+  --text-caption--letter-spacing: 0em;
+  --text-caption--line-height: 16px;
+
+  --text-caption-bold: 12px;
+  --text-caption-bold--font-weight: 500;
+  --text-caption-bold--letter-spacing: 0em;
+  --text-caption-bold--line-height: 16px;
+
+  --text-body: 14px;
+  --text-body--font-weight: 400;
+  --text-body--letter-spacing: 0em;
+  --text-body--line-height: 20px;
+
+  --text-body-bold: 14px;
+  --text-body-bold--font-weight: 500;
+  --text-body-bold--letter-spacing: 0em;
+  --text-body-bold--line-height: 20px;
+
+  --text-heading-3: 16px;
+  --text-heading-3--font-weight: 600;
+  --text-heading-3--letter-spacing: 0em;
+  --text-heading-3--line-height: 20px;
+
+  --text-heading-2: 20px;
+  --text-heading-2--font-weight: 600;
+  --text-heading-2--letter-spacing: 0em;
+  --text-heading-2--line-height: 24px;
+
+  --text-heading-1: 30px;
+  --text-heading-1--font-weight: 600;
+  --text-heading-1--letter-spacing: 0em;
+  --text-heading-1--line-height: 36px;
+
+  --text-monospace-body: 14px;
+  --text-monospace-body--font-weight: 400;
+  --text-monospace-body--letter-spacing: 0em;
+  --text-monospace-body--line-height: 20px;
+
+  /* --------------------------------------------------------------------------
+     FONT FAMILIES
+     -------------------------------------------------------------------------- */
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-display: "Afacad Flux", "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* Legacy aliases for Subframe compatibility */
+  --font-caption: var(--font-sans);
+  --font-caption-bold: var(--font-sans);
+  --font-body: var(--font-sans);
+  --font-body-bold: var(--font-sans);
+  --font-heading-3: var(--font-sans);
+  --font-heading-2: var(--font-sans);
+  --font-heading-1: var(--font-sans);
+  --font-monospace-body: var(--font-mono);
+
+  /* --------------------------------------------------------------------------
+     SHADOWS
+     Elevation system for depth
+     -------------------------------------------------------------------------- */
+  --shadow-sm: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+  --shadow-default: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0px 20px 25px -5px rgba(0, 0, 0, 0.1), 0px 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-overlay: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  /* Brand glow shadows */
+  --shadow-brand-sm: 0px 0px 10px 0px rgba(88, 51, 255, 0.15);
+  --shadow-brand: 0px 0px 20px 0px rgba(88, 51, 255, 0.25);
+  --shadow-brand-lg: 0px 0px 30px 0px rgba(88, 51, 255, 0.35);
+
+  /* --------------------------------------------------------------------------
+     BORDER RADIUS
+     Consistent corner rounding
+     -------------------------------------------------------------------------- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-DEFAULT: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* --------------------------------------------------------------------------
+     SPACING EXTENSIONS
+     Additional spacing values beyond Tailwind defaults
+     -------------------------------------------------------------------------- */
+  --spacing-112: 28rem;
+  --spacing-144: 36rem;
+  --spacing-192: 48rem;
+  --spacing-256: 64rem;
+  --spacing-320: 80rem;
+
+  /* --------------------------------------------------------------------------
+     TRANSITIONS
+     Consistent animation timing
+     -------------------------------------------------------------------------- */
+  --transition-fast: 150ms;
+  --transition-default: 200ms;
+  --transition-slow: 300ms;
+  --transition-slower: 500ms;
+}
+
+/* ============================================================================
+   LAYER 2: SEMANTIC TOKENS - LIGHT MODE (Default)
+   Purpose-based tokens that components reference.
+   These swap values between light and dark themes.
+   ============================================================================ */
+
+:root {
+  /* --------------------------------------------------------------------------
+     PAGE BACKGROUNDS
+     Main application backgrounds
+     -------------------------------------------------------------------------- */
+  --background: var(--color-neutral-0);
+  --background-subtle: var(--color-neutral-50);
+  --background-muted: var(--color-neutral-100);
+  
+  /* Gradient background (light mode signature look) */
+  --background-gradient-from: var(--color-brand-100);
+  --background-gradient-via: var(--color-brand-200);
+  --background-gradient-to: var(--color-brand-300);
+
+  /* --------------------------------------------------------------------------
+     FOREGROUND / TEXT
+     Text colors with hierarchy
+     -------------------------------------------------------------------------- */
+  --foreground: var(--color-neutral-900);
+  --foreground-muted: var(--color-neutral-600);
+  --foreground-subtle: var(--color-neutral-500);
+  --foreground-disabled: var(--color-neutral-400);
+  --foreground-inverse: var(--color-neutral-0);
+
+  /* --------------------------------------------------------------------------
+     CARDS & SURFACES
+     Elevated containers
+     -------------------------------------------------------------------------- */
+  --card: var(--color-neutral-0);
+  --card-foreground: var(--color-neutral-900);
+  --card-muted: var(--color-neutral-50);
+  --card-hover: var(--color-neutral-50);
+
+  /* --------------------------------------------------------------------------
+     BORDERS
+     Dividers and outlines
+     -------------------------------------------------------------------------- */
+  --border: var(--color-neutral-200);
+  --border-muted: var(--color-neutral-100);
+  --border-strong: var(--color-neutral-300);
+  --border-focus: var(--color-brand-600);
+
+  /* --------------------------------------------------------------------------
+     PRIMARY (Brand)
+     Main interactive elements
+     -------------------------------------------------------------------------- */
+  --primary: var(--color-brand-600);
+  --primary-hover: var(--color-brand-700);
+  --primary-active: var(--color-brand-800);
+  --primary-foreground: var(--color-neutral-0);
+  --primary-muted: var(--color-brand-50);
+  --primary-muted-foreground: var(--color-brand-600);
+
+  /* --------------------------------------------------------------------------
+     SECONDARY
+     Secondary interactive elements
+     -------------------------------------------------------------------------- */
+  --secondary: var(--color-neutral-100);
+  --secondary-hover: var(--color-neutral-200);
+  --secondary-active: var(--color-neutral-300);
+  --secondary-foreground: var(--color-neutral-700);
+
+  /* --------------------------------------------------------------------------
+     ACCENT
+     Highlights and emphasis
+     -------------------------------------------------------------------------- */
+  --accent: var(--color-brand-500);
+  --accent-foreground: var(--color-neutral-0);
+  --accent-muted: var(--color-brand-100);
+
+  /* --------------------------------------------------------------------------
+     MUTED
+     Subtle backgrounds and text
+     -------------------------------------------------------------------------- */
+  --muted: var(--color-neutral-100);
+  --muted-foreground: var(--color-neutral-500);
+
+  /* --------------------------------------------------------------------------
+     INPUT
+     Form elements
+     -------------------------------------------------------------------------- */
+  --input: var(--color-neutral-0);
+  --input-border: var(--color-neutral-200);
+  --input-focus: var(--color-brand-600);
+  --input-placeholder: var(--color-neutral-400);
+
+  /* --------------------------------------------------------------------------
+     STATUS COLORS
+     Semantic feedback colors
+     -------------------------------------------------------------------------- */
+  /* Success */
+  --success: var(--color-success-600);
+  --success-foreground: var(--color-neutral-0);
+  --success-muted: var(--color-success-100);
+  --success-muted-foreground: var(--color-success-800);
+  --success-border: var(--color-success-200);
+
+  /* Warning */
+  --warning: var(--color-warning-600);
+  --warning-foreground: var(--color-neutral-0);
+  --warning-muted: var(--color-warning-100);
+  --warning-muted-foreground: var(--color-warning-800);
+  --warning-border: var(--color-warning-200);
+
+  /* Error / Destructive */
+  --error: var(--color-error-600);
+  --error-foreground: var(--color-neutral-0);
+  --error-muted: var(--color-error-100);
+  --error-muted-foreground: var(--color-error-800);
+  --error-border: var(--color-error-200);
+
+  --destructive: var(--error);
+  --destructive-foreground: var(--error-foreground);
+
+  /* --------------------------------------------------------------------------
+     RING / FOCUS
+     Focus indicators
+     -------------------------------------------------------------------------- */
+  --ring: var(--color-brand-600);
+  --ring-offset: var(--color-neutral-0);
+
+  /* --------------------------------------------------------------------------
+     POPOVER & OVERLAY
+     Floating elements
+     -------------------------------------------------------------------------- */
+  --popover: var(--color-neutral-0);
+  --popover-foreground: var(--color-neutral-900);
+  --overlay: rgba(0, 0, 0, 0.2);
+  --overlay-heavy: rgba(0, 0, 0, 0.5);
+
+  /* --------------------------------------------------------------------------
+     COMPONENT-SPECIFIC TOKENS
+     Sidebar
+     -------------------------------------------------------------------------- */
+  --sidebar: var(--color-neutral-0);
+  --sidebar-foreground: var(--color-neutral-600);
+  --sidebar-muted: var(--color-neutral-400);
+  --sidebar-hover: var(--color-neutral-50);
+  --sidebar-active: var(--color-brand-50);
+  --sidebar-active-foreground: var(--color-brand-600);
+  --sidebar-border: var(--color-neutral-200);
+
+  /* Chat bubbles */
+  --chat-ai: var(--color-neutral-100);
+  --chat-ai-foreground: var(--color-neutral-900);
+  --chat-user: var(--color-brand-300);
+  --chat-user-foreground: var(--color-neutral-900);
+
+  /* Avatar gradient */
+  --avatar-gradient-from: var(--color-brand-600);
+  --avatar-gradient-to: var(--color-brand-300);
+
+  /* Progress bar */
+  --progress-track: var(--color-neutral-100);
+  --progress-fill: var(--color-success-600);
+
+  /* Source cards (selectable) */
+  --source-card: var(--color-neutral-0);
+  --source-card-border: var(--color-neutral-200);
+  --source-card-hover-border: var(--color-brand-600);
+  --source-card-selected: var(--color-brand-50);
+  --source-card-selected-border: var(--color-brand-600);
+
+  /* Preview cards (form state) */
+  --preview-card: var(--color-neutral-0);
+  --preview-card-border: var(--color-neutral-200);
+  --preview-card-complete: var(--color-success-200);
+  --preview-card-complete-border: var(--color-success-600);
+
+  /* Monitor cards */
+  --monitor-card: var(--color-neutral-0);
+  --monitor-card-border: var(--color-neutral-200);
+  --monitor-card-hover-border: rgba(88, 51, 255, 0.5);
+}
+
+/* ============================================================================
+   LAYER 2: SEMANTIC TOKENS - DARK MODE
+   Dark theme overrides - applied when .dark class is on html/body
+   ============================================================================ */
+
+.dark {
+  /* --------------------------------------------------------------------------
+     PAGE BACKGROUNDS
+     -------------------------------------------------------------------------- */
+  --background: var(--color-neutral-950);
+  --background-subtle: var(--color-neutral-900);
+  --background-muted: var(--color-neutral-800);
+  
+  /* Dark mode uses solid backgrounds, not gradients */
+  --background-gradient-from: var(--color-neutral-950);
+  --background-gradient-via: var(--color-neutral-950);
+  --background-gradient-to: var(--color-neutral-950);
+
+  /* --------------------------------------------------------------------------
+     FOREGROUND / TEXT
+     -------------------------------------------------------------------------- */
+  --foreground: var(--color-neutral-0);
+  --foreground-muted: var(--color-neutral-200);
+  --foreground-subtle: var(--color-neutral-400);
+  --foreground-disabled: var(--color-neutral-500);
+  --foreground-inverse: var(--color-neutral-900);
+
+  /* --------------------------------------------------------------------------
+     CARDS & SURFACES
+     -------------------------------------------------------------------------- */
+  --card: var(--color-neutral-900);
+  --card-foreground: var(--color-neutral-0);
+  --card-muted: var(--color-neutral-800);
+  --card-hover: var(--color-neutral-800);
+
+  /* --------------------------------------------------------------------------
+     BORDERS
+     -------------------------------------------------------------------------- */
+  --border: var(--color-neutral-700);
+  --border-muted: var(--color-neutral-800);
+  --border-strong: var(--color-neutral-600);
+  --border-focus: var(--color-brand-500);
+
+  /* --------------------------------------------------------------------------
+     PRIMARY (Brand)
+     -------------------------------------------------------------------------- */
+  --primary: var(--color-brand-600);
+  --primary-hover: var(--color-brand-500);
+  --primary-active: var(--color-brand-700);
+  --primary-foreground: var(--color-neutral-0);
+  --primary-muted: var(--color-brand-900);
+  --primary-muted-foreground: var(--color-brand-300);
+
+  /* --------------------------------------------------------------------------
+     SECONDARY
+     -------------------------------------------------------------------------- */
+  --secondary: var(--color-neutral-800);
+  --secondary-hover: var(--color-neutral-700);
+  --secondary-active: var(--color-neutral-600);
+  --secondary-foreground: var(--color-neutral-200);
+
+  /* --------------------------------------------------------------------------
+     ACCENT
+     -------------------------------------------------------------------------- */
+  --accent: var(--color-brand-500);
+  --accent-foreground: var(--color-neutral-0);
+  --accent-muted: var(--color-brand-900);
+
+  /* --------------------------------------------------------------------------
+     MUTED
+     -------------------------------------------------------------------------- */
+  --muted: var(--color-neutral-800);
+  --muted-foreground: var(--color-neutral-400);
+
+  /* --------------------------------------------------------------------------
+     INPUT
+     -------------------------------------------------------------------------- */
+  --input: var(--color-neutral-800);
+  --input-border: var(--color-neutral-700);
+  --input-focus: var(--color-brand-500);
+  --input-placeholder: var(--color-neutral-500);
+
+  /* --------------------------------------------------------------------------
+     STATUS COLORS
+     -------------------------------------------------------------------------- */
+  /* Success */
+  --success: var(--color-success-600);
+  --success-foreground: var(--color-neutral-0);
+  --success-muted: rgba(22, 163, 74, 0.2);
+  --success-muted-foreground: var(--color-success-400);
+  --success-border: var(--color-success-600);
+
+  /* Warning */
+  --warning: var(--color-warning-500);
+  --warning-foreground: var(--color-neutral-900);
+  --warning-muted: rgba(245, 158, 11, 0.2);
+  --warning-muted-foreground: var(--color-warning-400);
+  --warning-border: var(--color-warning-600);
+
+  /* Error / Destructive */
+  --error: var(--color-error-500);
+  --error-foreground: var(--color-neutral-0);
+  --error-muted: rgba(239, 68, 68, 0.2);
+  --error-muted-foreground: var(--color-error-400);
+  --error-border: var(--color-error-600);
+
+  --destructive: var(--error);
+  --destructive-foreground: var(--error-foreground);
+
+  /* --------------------------------------------------------------------------
+     RING / FOCUS
+     -------------------------------------------------------------------------- */
+  --ring: var(--color-brand-500);
+  --ring-offset: var(--color-neutral-950);
+
+  /* --------------------------------------------------------------------------
+     POPOVER & OVERLAY
+     -------------------------------------------------------------------------- */
+  --popover: var(--color-neutral-900);
+  --popover-foreground: var(--color-neutral-0);
+  --overlay: rgba(0, 0, 0, 0.6);
+  --overlay-heavy: rgba(0, 0, 0, 0.8);
+
+  /* --------------------------------------------------------------------------
+     COMPONENT-SPECIFIC TOKENS
+     Sidebar (dark variant with brand-600 active state)
+     -------------------------------------------------------------------------- */
+  --sidebar: var(--color-neutral-900);
+  --sidebar-foreground: var(--color-neutral-200);
+  --sidebar-muted: var(--color-neutral-400);
+  --sidebar-hover: var(--color-neutral-800);
+  --sidebar-active: var(--color-brand-600);
+  --sidebar-active-foreground: var(--color-neutral-0);
+  --sidebar-border: var(--color-neutral-800);
+
+  /* Chat bubbles */
+  --chat-ai: transparent;
+  --chat-ai-foreground: var(--color-neutral-100);
+  --chat-user: var(--color-brand-600);
+  --chat-user-foreground: var(--color-neutral-0);
+
+  /* Avatar gradient */
+  --avatar-gradient-from: var(--color-brand-600);
+  --avatar-gradient-to: var(--color-brand-500);
+
+  /* Progress bar */
+  --progress-track: var(--color-neutral-700);
+  --progress-fill: var(--color-success-600);
+
+  /* Source cards (selectable) */
+  --source-card: var(--color-neutral-800);
+  --source-card-border: var(--color-neutral-700);
+  --source-card-hover-border: var(--color-brand-500);
+  --source-card-selected: var(--color-brand-900);
+  --source-card-selected-border: var(--color-brand-500);
+
+  /* Preview cards (form state) */
+  --preview-card: var(--color-neutral-800);
+  --preview-card-border: var(--color-neutral-700);
+  --preview-card-complete: transparent;
+  --preview-card-complete-border: var(--color-success-600);
+
+  /* Monitor cards */
+  --monitor-card: var(--color-neutral-900);
+  --monitor-card-border: var(--color-neutral-800);
+  --monitor-card-hover-border: rgba(88, 51, 255, 0.5);
+}
+
+/* ============================================================================
+   BASE STYLES
+   Global element styling
+   ============================================================================ */
 
 html {
-  font-family: Inter;
+  font-family: var(--font-sans);
   height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 body {
   flex-grow: 1;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* Smooth theme transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: var(--transition-fast);
+}
+
+/* Disable transitions on initial load and theme switch to prevent flash */
+.no-transitions * {
+  transition: none !important;
+}
+
+/* ============================================================================
+   UTILITY CLASSES
+   Custom utilities for the design system
+   ============================================================================ */
+
+/* Background gradient utility */
+@utility bg-page-gradient {
+  background: linear-gradient(
+    to bottom right,
+    var(--background-gradient-from),
+    var(--background-gradient-via),
+    var(--background-gradient-to)
+  );
+}
+
+/* Brand glow effect */
+@utility shadow-brand-glow {
+  box-shadow: var(--shadow-brand);
+}
+
+/* Container override */
+@utility container {
+  padding-left: 16px;
+  padding-right: 16px;
+
+  @media (width >= theme(--breakpoint-sm)) {
+    padding-left: calc((100vw + 16px - 640px) / 2);
+    padding-right: calc((100vw + 16px - 640px) / 2);
+  }
+
+  @media (width >= theme(--breakpoint-md)) {
+    padding-left: calc((100vw + 16px - 768px) / 2);
+    padding-right: calc((100vw + 16px - 768px) / 2);
+  }
+
+  @media (width >= theme(--breakpoint-lg)) {
+    padding-left: calc((100vw + 16px - 1024px) / 2);
+    padding-right: calc((100vw + 16px - 1024px) / 2);
+  }
+
+  @media (width >= theme(--breakpoint-xl)) {
+    padding-left: calc((100vw + 16px - 1280px) / 2);
+    padding-right: calc((100vw + 16px - 1280px) / 2);
+  }
+
+  @media (width >= theme(--breakpoint-2xl)) {
+    padding-left: calc((100vw + 16px - 1536px) / 2);
+    padding-right: calc((100vw + 16px - 1536px) / 2);
+  }
+}
+
+/* Mobile breakpoint variant */
+@custom-variant mobile (@media (max-width: 767px));
+
+/* ============================================================================
+   TAILWIND CSS VARIABLE EXTENSIONS
+   Map semantic tokens to Tailwind color utilities
+   Usage: bg-background, text-foreground, border-border, etc.
+   ============================================================================ */
+
+@theme inline {
+  /* Map semantic tokens to Tailwind utilities */
+  --color-background: var(--background);
+  --color-background-subtle: var(--background-subtle);
+  --color-background-muted: var(--background-muted);
+
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-foreground-subtle: var(--foreground-subtle);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-muted: var(--primary-muted);
+  --color-primary-muted-foreground: var(--primary-muted-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-muted: var(--accent-muted);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-border: var(--border);
+  --color-border-muted: var(--border-muted);
+  --color-border-strong: var(--border-strong);
+
+  --color-input: var(--input);
+  --color-input-border: var(--input-border);
+
+  --color-ring: var(--ring);
+
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-success-muted: var(--success-muted);
+  --color-success-muted-foreground: var(--success-muted-foreground);
+
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-warning-muted: var(--warning-muted);
+  --color-warning-muted-foreground: var(--warning-muted-foreground);
+
+  --color-error: var(--error);
+  --color-error-foreground: var(--error-foreground);
+  --color-error-muted: var(--error-muted);
+  --color-error-muted-foreground: var(--error-muted-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  /* Component-specific colors */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-muted: var(--sidebar-muted);
+  --color-sidebar-hover: var(--sidebar-hover);
+  --color-sidebar-active: var(--sidebar-active);
+  --color-sidebar-active-foreground: var(--sidebar-active-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+
+  --color-chat-ai: var(--chat-ai);
+  --color-chat-ai-foreground: var(--chat-ai-foreground);
+  --color-chat-user: var(--chat-user);
+  --color-chat-user-foreground: var(--chat-user-foreground);
+
+  --color-progress-track: var(--progress-track);
+  --color-progress-fill: var(--progress-fill);
+
+  --color-source-card: var(--source-card);
+  --color-source-card-border: var(--source-card-border);
+  --color-source-card-selected: var(--source-card-selected);
+
+  --color-preview-card: var(--preview-card);
+  --color-preview-card-border: var(--preview-card-border);
+  --color-preview-card-complete: var(--preview-card-complete);
+
+  --color-monitor-card: var(--monitor-card);
+  --color-monitor-card-border: var(--monitor-card-border);
+
+  --color-overlay: var(--overlay);
+  --color-overlay-heavy: var(--overlay-heavy);
+
+  /* Font families for Tailwind */
+  --font-sans: var(--font-ibm-plex-sans), "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), "IBM Plex Mono", ui-monospace, monospace;
+  --font-display: "Afacad Flux", var(--font-sans);
 }
