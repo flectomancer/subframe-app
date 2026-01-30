@@ -36,3 +36,7 @@ export { ModalOverlay, type ModalOverlayProps } from "./modal-overlay";
 export { sidebarMenuItemVariants } from "./sidebar-menu-item";
 export { avatarVariants } from "./avatar";
 export { chatBubbleVariants } from "./chat-bubble";
+
+// Page Components (Containers)
+export { DashboardPage, type DashboardPageProps, type Monitor } from "./pages/dashboard-page";
+export { NewMonitorPage, type NewMonitorPageProps, type ChatMessage, type PreviewField } from "./pages/new-monitor-page";
